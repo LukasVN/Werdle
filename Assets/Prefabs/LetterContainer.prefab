@@ -204,6 +204,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   letterText: {fileID: 7353763017450332249}
+  whitePanel: {fileID: 685375801956309878}
+  grayPanel: {fileID: 4775563857102408320}
+  orangePanel: {fileID: 5197898909900041465}
+  greenPanel: {fileID: 3576209365303483297}
 --- !u!1 &4775563857102408320
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,7 +220,7 @@ GameObject:
   - component: {fileID: 3569234394259945470}
   - component: {fileID: 1493391803043732290}
   m_Layer: 5
-  m_Name: GreyPanel
+  m_Name: GrayPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -262,7 +266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2264151, g: 0.2264151, b: 0.2264151, a: 1}
+  m_Color: {r: 0.2264151, g: 0.2264151, b: 0.2264151, a: 0.7019608}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

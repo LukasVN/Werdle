@@ -14,20 +14,6 @@ public class WordPanel : MonoBehaviour
         letterIndex = 0;
     }
 
-    void Update()
-    {
-        if(Input.anyKeyDown){
-            if(Input.inputString.Length > 0 && char.IsLetter(Input.inputString[0])){
-                Debug.Log("Letter "+Input.inputString[0]);
-                AddLetter(Input.inputString.ToUpper()[0]);
-            }
-            else if(Input.GetKeyDown(KeyCode.Backspace)){
-                Debug.Log("Pressed");
-                RemoveLetter();
-            }
-        } 
-    }
-
     public void AddLetter(char letterChar){
         if(letterIndex < numberOfLetters){
             letters[letterIndex].SetLetter(letterChar);
@@ -67,7 +53,37 @@ public class WordPanel : MonoBehaviour
         return word;
     }
 
-    public void SetStatus(int[] status) {
-
+    public void SetStatus(LetterStatus[] status) {
+        for (int i = 0; i < numberOfLetters; i++){
+            letters[i].whitePanel.SetActive(false);
+            switch (status[i])
+            {
+                case LetterStatus.Green: letters[i].greenPanel.SetActive(true);
+                break;
+                case LetterStatus.Orange: letters[i].orangePanel.SetActive(true);
+                break;
+                case LetterStatus.Gray: letters[i].grayPanel.SetActive(true);
+                break;
+            }
+        }
+        GameManager.instance.wordPanel = null;
+        if(!isWordGuessed(status)){
+            Invoke("NextTry",1.5f);
+        }
     }
+
+    public void NextTry(){
+        GameManager.instance.tryNumber++;
+        GameManager.instance.SpawnNextPanel(); 
+    }
+
+    public bool isWordGuessed(LetterStatus[] status){
+        foreach (LetterStatus color in status){
+            if(color != LetterStatus.Green){
+                return false;
+            }
+        }
+        return true;
+    }
+    
 }

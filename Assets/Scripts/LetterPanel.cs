@@ -6,11 +6,15 @@ using UnityEngine;
 public class LetterPanel : MonoBehaviour
 {
     public TextMeshProUGUI letterText;
+    public GameObject whitePanel;
+    public GameObject grayPanel;
+    public GameObject orangePanel;
+    public GameObject greenPanel;
+
     void Start(){
     }
 
-    void Update()
-    {
+    void Update(){
         
     }
 
@@ -25,4 +29,5 @@ public class LetterPanel : MonoBehaviour
     public string GetLetter(){
         return letterText.text;
     }
+
 }
