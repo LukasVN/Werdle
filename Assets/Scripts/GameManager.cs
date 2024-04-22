@@ -45,6 +45,9 @@ public class GameManager : MonoBehaviour
 
     public void ButtonSendOnClick(){
         if(WordCollection.TestValidWord(wordPanel.GetWord())){
+            foreach (LetterPanel letter in wordPanel.GetComponentsInChildren<LetterPanel>()){
+                letter.rotating = true;
+            }
             wordPanel.SetStatus(TestWord(wordPanel.GetWord(),guessWord));
         }
         else{
@@ -54,26 +57,29 @@ public class GameManager : MonoBehaviour
 
     private LetterStatus[] TestWord(string guessTry, string correctWord){
         LetterStatus[] status = new LetterStatus[wordPanel.numberOfLetters];
-        int index = 0;
-        foreach (char letter in correctWord){
+        List<char> correctLetters = new List<char>();
+        List<char> incorrectLetters = new List<char>();
+
+        for (int index = 0; index < correctWord.Length; index++){
             if(correctWord[index] == guessTry[index]){
-                Debug.Log(letter+"  "+correctWord[index]);
+                Debug.Log(guessTry[index]+"  "+correctWord[index]);
                 status[index] = LetterStatus.Green;
-                index++;
-            }
-            else if(correctWord.Contains(guessTry[index]) && correctWord[index] != guessTry[index]){
-                status[index] = LetterStatus.Orange;
-                index++;
+                correctLetters.Add(guessTry[index]);
             }
             else{
+                incorrectLetters.Add(guessTry[index]);
                 status[index] = LetterStatus.Gray;
-                index++;
             }
         }
 
+        for (int index = 0; index < incorrectLetters.Count; index++){
+            if (correctWord.Contains(incorrectLetters[index]) && !correctLetters.Contains(incorrectLetters[index])){
+                status[guessTry.IndexOf(incorrectLetters[index])] = LetterStatus.Orange;
+            }
+        }
         return status;
     }
- 
+
 
     public void SpawnNextPanel(){
         wordPanel = Instantiate(wordPanelPrefab, canvas).GetComponentInChildren<WordPanel>();
@@ -81,6 +87,7 @@ public class GameManager : MonoBehaviour
         Vector3 newPosition = new Vector3(rt.position.x, rt.position.y -100 * tryNumber, rt.position.z);
         rt.position = newPosition;
     }
+    
 }
 
 public enum LetterStatus{
